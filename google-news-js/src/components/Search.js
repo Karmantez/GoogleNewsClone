@@ -1,5 +1,7 @@
-export default function Search({ $app, initialState }) {
+export default function Search({ $app, initialState, onSearch }) {
   this.state = initialState;
+  this.onSearch = onSearch;
+  this.debounce = null;
 
   this.$container = document.createElement('div');
   this.$container.id = 'news-search';
@@ -15,12 +17,28 @@ export default function Search({ $app, initialState }) {
     this.render();
   };
 
-  this.render = () => {
-    this.$input.addEventListener('click', e => {
-      e.stopImmediatePropagation();
+  this.searchEvent = e => {
+    e.stopImmediatePropagation();
 
-      console.log(e.target.value);
-    });
+    if (e.type === 'keypress') {
+      if (e.code === 'Enter') {
+        this.onSearch(e.target.value);
+      } else {
+        clearTimeout(this.debounce);
+        this.debounce = setTimeout(() => {
+          console.log(e.target.value);
+        }, 300);
+      }
+    } else if (e.type === 'click') {
+      console.log('click!');
+    }
+  };
+
+  this.render = () => {
+    this.$input.focus();
+
+    this.$input.addEventListener('click', this.searchEvent);
+    this.$input.addEventListener('keypress', this.searchEvent);
   };
   this.render();
 }
