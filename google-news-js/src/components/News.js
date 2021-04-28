@@ -10,13 +10,35 @@ export default function News({ $app, initialState }) {
     this.render();
   };
 
+  this.onScrolling = () => {
+    const news = document.querySelectorAll('.news-container');
+
+    const ob = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          console.log(entry.target.children[0]);
+
+          const img = entry.target.children[0].children[0];
+          const { src } = img.dataset;
+
+          img.setAttribute('src', src);
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+
+    news.forEach(article => {
+      ob.observe(article);
+    });
+  };
+
   this.render = () => {
     this.$wrapper.innerHTML = this.state.news
       .map(article => {
         return `
         <div class="news-container" data-url="${article.url}">
           <div class="news-img">
-            <img src="${article.urlToImage}" />
+            <img src="#" data-src="${article.urlToImage}" />
           </div>
           
           <div class="news-spec">
@@ -40,8 +62,10 @@ export default function News({ $app, initialState }) {
     this.$wrapper.addEventListener('click', e => {
       e.stopImmediatePropagation();
 
-      console.log(e.target);
+      const { url } = e.target.parentNode.parentNode.dataset;
+      window.open(url);
     });
+    this.onScrolling();
   };
 
   this.render();
