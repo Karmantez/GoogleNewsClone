@@ -1,7 +1,7 @@
 import React from 'react';
 import News from './News';
 
-export default function Category({ articles }) {
+export default function NewsList({ articles }) {
   console.log(articles);
   return (
     <div>

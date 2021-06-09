@@ -1,18 +1,19 @@
-const baseURL = 'https://newsapi.org/v2';
+// const baseURL = 'https://newsapi.org/v2';
 const config = {
   method: 'GET',
-  mode: 'no-cors',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  // headers: {
+  //   'Content-Type': 'application/json',
+  // },
 };
 
 const getNews = async (type = 'top-headlines', query = undefined) => {
-  const url = `${baseURL}/${type}?${query !== undefined ? `q=${query}&` : ''}country=kr&apiKey=${
+  const url = `/api/${type}?${query !== undefined ? `q=${query}&` : ''}country=kr&apiKey=${
     process.env.API_KEY
   }`;
   console.log(url);
+  // const result = await fetch(url, config);
   const result = await fetch(url, config);
+  console.log(result);
   return result;
 };
 

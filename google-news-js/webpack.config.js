@@ -4,7 +4,7 @@ const webpack = require('webpack');
 require('dotenv').config();
 
 module.exports = {
-  mode: 'none',
+  mode: 'development',
   entry: './index.js',
   output: {
     filename: 'bundle.js',
@@ -12,6 +12,14 @@ module.exports = {
   },
   devServer: {
     port: 9000,
+    proxy: {
+      '/api': {
+        target: 'https://newsapi.org/v2',
+        changeOrigin: true,
+        logLevel: 'debug',
+        pathRewrite: { '^/api': '' },
+      },
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({

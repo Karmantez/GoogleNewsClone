@@ -37,7 +37,7 @@ export default function App($app) {
 
   this.setState = async (query = undefined) => {
     const res = await getNews();
-    console.log(res);
+    // console.log(res);
 
     const { status, totalResult, articles } = await getDummyNews({ query });
 
