@@ -21,6 +21,10 @@ export default function NewsContainer() {
 
   useEffect(async () => {
     const result = await getArticles();
+
+    result.articles.forEach((article, index) => {
+      article.id = `article-${index}`;
+    });
     dispatch(initNews(result.articles));
   }, []);
 
