@@ -1,0 +1,16 @@
+.card-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+
+  z-index: 100;
+}
+
+.card-option:hover {
+  cursor: grab;
+  background: rgba(55, 53, 47, 0.08);
+}
